@@ -16,7 +16,7 @@ if state.status = "processing" && sensors.endstops[0].triggered
 			break
 
 
-if state.status == "paused" && {global.SensorTriggered} = 1
+if state.status == "paused" && {global.ext1} = 1
 	while true
 		if iterations < 60 && !sensors.endstops[0].triggered
 			continue
