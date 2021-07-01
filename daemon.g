@@ -1,32 +1,28 @@
-; You need to put "  global SensorTriggered=2  " in config.g
-; Code is crappy, may contain errors but it works.
+; You need to put "  global ext1=0  " in config.g   <<<<<<<<<<<<<<<<<<<<<< THIS
+; Code is better :)
+
+; G4 P50 means wait 50 miliseconds (0.05 s)
 
 
 if state.status = "processing" && sensors.endstops[0].triggered
- while true
-  if iterations < 20 && sensors.endstops[0].triggered
-   continue
-   G4 P50
-   M400
-  if iterations = 20 && sensors.endstops[0].triggered
-   M25
-   set global.SensorTriggered=1
-  else
-   break
- else
-  if state.status = "processing" && !sensors.endstops[0].triggered
-  break
- continue
+	while true
+		if iterations < 60 && sensors.endstops[0].triggered
+			continue
+			G4 P50
+		if iterations = 60 && sensors.endstops[0].triggered
+			M25
+			set global.ext1=1
+		else
+			break
 
 
 if state.status == "paused" && {global.SensorTriggered} = 1
- while true
-  if iterations < 20 && !sensors.endstops[0].triggered
-   continue
-   G4 P50
-   M400
-  if iterations = 20 && !sensors.endstops[0].triggered
-   M24
-   set global.SensorTriggered=0
-  else
-   break
+	while true
+		if iterations < 60 && !sensors.endstops[0].triggered
+			continue
+			G4 P50
+		if iterations = 60 && !sensors.endstops[0].triggered
+			M24
+			set global.ext1=0
+		else
+			break
